@@ -1,6 +1,8 @@
 import React from 'react';
+import Header from './header';
+import ProductList from './product-list';
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,8 +20,13 @@ export default class App extends React.Component {
   }
 
   render() {
-    return this.state.isLoading
-      ? <h1>Testing connections...</h1>
+    return !this.state.isLoading
+      ? <div>
+        <Header title="Wicked Sales" />
+        <ProductList />
+      </div>
       : <h1>{ this.state.message }</h1>;
   }
 }
+
+export default App;
