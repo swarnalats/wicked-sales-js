@@ -1,14 +1,31 @@
 import React from 'react';
 import Header from './header';
 import ProductList from './product-list';
+import ProductDetails from './product-details';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       message: null,
-      isLoading: true
+      isLoading: true,
+      view: {
+        name: 'catalog',
+        params: {}
+      }
     };
+    this.setView = this.setView.bind(this);
+  }
+
+  setView(name, params) {
+    this.setState({
+      view: {
+        name: name,
+        params: {
+          productId: params
+        }
+      }
+    });
   }
 
   componentDidMount() {
@@ -20,11 +37,17 @@ class App extends React.Component {
   }
 
   render() {
+    // alert(this.state.view.name);
     return !this.state.isLoading
-      ? <div>
-        <Header title="Wicked Sales" />
-        <ProductList />
-      </div>
+      ? this.state.view.name === 'catalog'
+        ? <div>
+          <Header title="Wicked Sales" />
+          <ProductList view={this.setView} />
+        </div>
+        : <div>
+          <Header title="Wicked Sales" />
+          <ProductDetails viewState = {this.state.view.params} viewMethod={this.setView}/>
+        </div>
       : <h1>{ this.state.message }</h1>;
   }
 }

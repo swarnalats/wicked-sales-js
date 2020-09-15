@@ -21,8 +21,20 @@ app.get('/api/health-check', (req, res, next) => {
 });
 
 app.get('/api/products', (req, res, next) => {
-  db.query('select "productId", name, price, image, "shortDescription" from products')
+  db.query('select "productId", name, price, image, "shortDescription" , "longDescription" from products')
     .then(result => res.json(result.rows))
+    .catch(err => next(err));
+});
+
+app.get('/api/products/:productId', (req, res, next) => {
+  db.query(`select * from products where "productId" = '${req.params.productId}'`)
+    .then(response => {
+      if (response.rows.length === 0) {
+        next(new ClientError(`cannot find ${req.params.productId} in the products table`, 404));
+      } else {
+        res.json(response.rows[0]);
+      }
+    })
     .catch(err => next(err));
 });
 
