@@ -33,7 +33,7 @@ class ProductList extends React.Component {
           <div className={'col-sm'}>
             {
               this.state.products.map(product => (
-                <ProductListItem key={product.productId} product={product} />
+                <ProductListItem key={product.productId} product={product} click={this.props.view} />
               ))
             }
           </div>
