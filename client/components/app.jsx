@@ -37,7 +37,6 @@ class App extends React.Component {
   }
 
   render() {
-    // alert(this.state.view.name);
     return !this.state.isLoading
       ? this.state.view.name === 'catalog'
         ? <div>
