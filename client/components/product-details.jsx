@@ -11,7 +11,7 @@ class ProductDetails extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/products/1')
+    fetch(`/api/products/${this.props.viewState.productId}`)
       .then(response => response.json())
       .then(resp => this.setState({
         product: resp,

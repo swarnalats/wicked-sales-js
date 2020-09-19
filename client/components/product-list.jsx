@@ -26,22 +26,17 @@ class ProductList extends React.Component {
   }
 
   render() {
-
     return (
       <div className={'container'}>
         <div className={'row'}>
-          <div className={'col-sm'}>
-            {
-              this.state.products.map(product => (
-                <ProductListItem key={product.productId} product={product} click={this.props.view} />
-              ))
-            }
-          </div>
+          {
+            this.state.products.map(product => (
+              <ProductListItem key={product.productId} product={product} click={this.props.view} />
+            ))
+          }
         </div>
       </div>
-
     );
-
   }
 }
 
