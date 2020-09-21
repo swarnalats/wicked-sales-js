@@ -65,15 +65,7 @@
         "error",
         "multi-line"
       ],
-      "no-console": [
-        "error",
-        {
-          "allow": [
-            "warn",
-            "error"
-          ]
-        }
-      ],
+      "no-console": "off",
       "space-before-function-paren": [
         "error",
         {
