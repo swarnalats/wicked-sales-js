@@ -1,4 +1,62 @@
 .card-space {
-    padding: 10px;
-    margin:10px;
+    padding: 5px;
+    margin:45px;     
 }
+
+.card-detail-space {
+    margin: 2px;
+    border: 5px;    
+}
+
+.imageArea {
+    height:240px;
+    width:235px;
+    object-fit:cover;
+    margin:5px;
+}
+
+.imageArea1 {
+    height:350px;
+    width:350px;
+    object-fit:cover;
+}    
+
+.headerStyle {
+    background-color:black;
+    font: white;
+    color:white; 
+    padding:0px;        
+}
+
+.cartStyleButton {
+    background-color : green;
+    color: white;
+}
+
+.backToCatalogButton {
+    border: none;
+}
+
+.innerContainer {
+    margin:auto;
+    border-color: black;
+    border-width: 1px;
+}
+
+.cartAlign {
+    text-align:right;
+}
+
+.container {
+    border-style: solid;
+    border-color:black;
+    border-width: 1px;
+}
+
+.back {
+    background-color:black;
+}
+
+
+
+
