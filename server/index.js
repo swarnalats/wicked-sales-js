@@ -57,53 +57,6 @@ app.get('/api/cart', (req, res, next) => {
     .then(response => res.json(response.rows));
 });
 
-// app.post('/api/cart', (req, res, next) => {
-//   const { productId } = req.body;
-//   if (!parseInt(productId, 10)) {
-//     return res.status(400).json({
-//       error: '"GradeId" must be a positive integer'
-//     });
-//   }
-//   db.query(`select "price" from "products" where "productId" = ${req.body.productId}`)
-//     .then(response => {
-//       if (response.rows.length === 0) {
-//         next(new ClientError(`cannot find ${req.params.productId} in the products table`, 400));
-//       }
-//       const price = response.rows[0].price;
-//       var obj = {};
-//       db.query('insert into carts ("cartId", "createdAt") values (default, default) returning "cartId"')
-//         .then(response => {
-//           obj = {
-//             cartId: response.rows[0].cartId,
-//             price: price
-//           };
-//           return obj;
-//         })
-//         .then(response => {
-//           console.log('Obj', response);
-//           req.session.cartId = response.cartId;
-//           db.query(`insert into "cartItems" ("cartId", "productId", "price")
-//                     values (${response.cartId},${req.body.productId},${response.price})
-//                     returning "cartItemId"`)
-//             .then(response => { return response.rows[0].cartItemId; })
-//             .then(response => {
-//               db.query(`select "c"."cartItemId",
-//                          "c"."price",
-//                           "p"."productId",
-//                           "p"."name",
-//                           "p"."image",
-//                           "p"."shortDescription",
-//                           "p"."longDescription"
-//                         from "cartItems" as "c"
-//                         join "products" as"p" using ("productId")
-//                         where "c"."cartItemId" = ${response}`)
-//                 .then(response => res.status(201).json(response.rows[0]));
-//             });
-//         })
-//         .catch(err => next(err));
-//     });
-// });
-
 app.post('/api/cart', (req, res, next) => {
   const { productId } = req.body;
   if (!parseInt(productId, 10)) {
@@ -151,7 +104,7 @@ app.post('/api/cart', (req, res, next) => {
                         from "cartItems" as "c" 
                         join "products" as"p" using ("productId")  
                         where "c"."cartItemId" = ${response}`)
-            .then(response => res.status(201).json(response.rows[0]));
+            .then(response => { console.log('r', response.rows[0]); res.send(response.rows[0]); });
         });
     })
     .catch(err => next(err));
