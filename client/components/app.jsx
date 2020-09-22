@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
+import CartSummary from './CartSummary';
 
 class App extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(data => {
         console.log('data from fetch', data);
-        this.setState({ cart: data.length });
+        this.setState({ cart: data });
       })
       .catch(err => this.setState({ message: err.message }));
   }
@@ -38,7 +39,7 @@ class App extends React.Component {
       },
       body: JSON.stringify(product)
     })
-      .then(data => { this.setState({ cart: this.state.cart + 1 }); console.log('No', this.state.cart); })
+      .then(data => { const cartData = this.state.cart; cartData.push(data); this.setState({ cart: cartData }); this.getCartItems(); console.log('Data Added', this.state.cart); })
       .catch(error => { console.error('Error:', error); });
   }
 
@@ -63,17 +64,29 @@ class App extends React.Component {
   }
 
   render() {
-    return !this.state.isLoading
-      ? this.state.view.name === 'catalog'
-        ? <div >
-          <Header title="$ Wicked Sales" cartCount={this.state.cart}/>
-          <ProductList view={this.setView} />
-        </div>
-        : <div >
-          <Header title="$ Wicked Sales" cartCount={this.state.cart}/>
-          <ProductDetails viewState = {this.state.view.params} viewMethod={this.setView} addToCart={this.addToCart}/>
-        </div>
-      : <h1>{ this.state.message }</h1>;
+    return (
+      <div> <Header title="$ Wicked Sales" cartCount={this.state.cart.length} viewState={this.setView}/>
+        {
+          !this.state.isLoading
+            ? this.state.view.name === 'catalog'
+              ? <div >
+                {/* <Header title="$ Wicked Sales" cartCount={this.state.cart.length} viewState={this.setView}/> */}
+                <ProductList view={this.setView} />
+              </div>
+              : this.state.view.name === 'cart'
+                ? <div >
+                  {/* <Header title="$ Wicked Sales" cartCount={this.state.cart.length} viewState={this.setView}/> */}
+                  {/* <ProductList view={this.setView} /> */}
+                  <CartSummary cartState={this.state.cart} viewMethod={this.setView}/>
+                </div>
+                : <div >
+                  {/* <Header title="$ Wicked Sales" cartCount={this.state.cart.length} viewState={this.setView}/> */}
+                  <ProductDetails viewState = {this.state.view.params} viewMethod={this.setView} addToCart={this.addToCart}/>
+                </div>
+            : <h1>{ this.state.message }</h1>
+        }
+      </div>
+    );
   }
 }
 
